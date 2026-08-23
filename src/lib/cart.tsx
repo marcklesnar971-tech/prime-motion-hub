@@ -13,7 +13,7 @@ import { SHOP_CONFIG, formatPrice } from "@/lib/shop-config";
 export type CartLine = {
   slug: string;
   qty: number;
-  variant?: string;
+  variant?: string | undefined;
 };
 
 type CartContextValue = {
