@@ -53,19 +53,19 @@ export function Hero() {
       {/* capa 3 · partículas */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         {[
-          [12, 30, 6],
-          [78, 22, 8],
-          [64, 70, 7],
-          [30, 78, 9],
-          [88, 55, 6],
-          [45, 14, 10],
-        ].map(([left, top, dur], i) => (
+          { left: 12, top: 30, dur: 6 },
+          { left: 78, top: 22, dur: 8 },
+          { left: 64, top: 70, dur: 7 },
+          { left: 30, top: 78, dur: 9 },
+          { left: 88, top: 55, dur: 6 },
+          { left: 45, top: 14, dur: 10 },
+        ].map((p, i) => (
           <motion.span
             key={i}
             className="absolute h-1 w-1 rounded-full bg-primary/50"
-            style={{ left: `${left}%`, top: `${top}%` }}
+            style={{ left: `${p.left}%`, top: `${p.top}%` }}
             animate={{ y: [0, -18, 0], opacity: [0.15, 0.6, 0.15] }}
-            transition={{ duration: dur, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: p.dur, repeat: Infinity, ease: "easeInOut" }}
           />
         ))}
       </div>
