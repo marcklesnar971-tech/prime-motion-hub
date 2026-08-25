@@ -52,7 +52,9 @@ export function CartDrawer() {
                 <div className="flex h-full flex-col items-center justify-center gap-4 text-center">
                   <p className="text-sm text-muted-foreground">Tu carrito está vacío.</p>
                   <Button asChild variant="secondary" onClick={() => setOpen(false)}>
-                    <Link to="/productos">VER PRODUCTOS</Link>
+                    <Link to="/productos" search={{ q: "", cat: "todos" }}>
+                      VER PRODUCTOS
+                    </Link>
                   </Button>
                 </div>
               ) : (
