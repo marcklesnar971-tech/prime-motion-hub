@@ -39,17 +39,21 @@ export function LineReveal({
   return (
     <div className={className}>
       {lines.map((line, i) => (
-        <span key={line} className="block overflow-hidden">
+        <motion.span
+          key={line}
+          className="block overflow-hidden pb-[0.06em] leading-[1.02]"
+          initial="hidden"
+          whileInView="shown"
+          viewport={{ once: true, margin: "-60px" }}
+        >
           <motion.span
             className={cn("block", lineClassName)}
-            initial={{ y: "110%" }}
-            whileInView={{ y: "0%" }}
-            viewport={{ once: true, margin: "-60px" }}
+            variants={{ hidden: { y: "110%" }, shown: { y: "0%" } }}
             transition={{ duration: 0.8, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
             {line}
           </motion.span>
-        </span>
+        </motion.span>
       ))}
     </div>
   );

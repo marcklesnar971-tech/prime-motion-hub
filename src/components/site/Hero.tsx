@@ -83,8 +83,8 @@ export function Hero() {
             ENTRENA · EVOLUCIONA · SUPERA
           </motion.p>
 
-          <h1 className="font-display text-[11vw] leading-[0.95] sm:text-5xl lg:text-6xl xl:text-7xl">
-            {["TU MEJOR VERSIÓN", "SE CONSTRUYE."].map((line, i) => (
+          <h1 className="font-display text-[9.5vw] leading-[0.95] sm:text-6xl lg:text-7xl">
+            {["TU MEJOR", "VERSIÓN", "SE CONSTRUYE."].map((line, i) => (
               <span key={line} className="block overflow-hidden pb-[0.06em]">
                 <motion.span
                   className="block whitespace-nowrap"
@@ -92,7 +92,7 @@ export function Hero() {
                   animate={{ y: "0%" }}
                   transition={{ duration: 0.9, delay: 0.1 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  {i === 1 ? (
+                  {i === 2 ? (
                     <>
                       SE <span className="text-primary">CONSTRUYE.</span>
                     </>
@@ -103,6 +103,7 @@ export function Hero() {
               </span>
             ))}
           </h1>
+
 
           <motion.p
             initial={{ opacity: 0 }}
