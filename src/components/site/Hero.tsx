@@ -83,7 +83,7 @@ export function Hero() {
             ENTRENA · EVOLUCIONA · SUPERA
           </motion.p>
 
-          <h1 className="font-display text-[13vw] leading-[0.95] sm:text-6xl lg:text-7xl">
+          <h1 className="font-display text-[9.5vw] leading-[0.95] sm:text-6xl lg:text-7xl">
             {["TU MEJOR", "VERSIÓN", "SE CONSTRUYE."].map((line, i) => (
               <span key={line} className="block overflow-hidden pb-[0.06em]">
                 <motion.span
