@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Plus, Star } from "lucide-react";
+import { motion } from "motion/react";
 import { toast } from "sonner";
 import { TiltCard } from "@/components/site/TiltCard";
 import { Button } from "@/components/ui/button";
@@ -10,6 +12,9 @@ import { cn } from "@/lib/utils";
 
 export function ProductCard({ product, className }: { product: Product; className?: string }) {
   const { add, setOpen } = useCart();
+  const [pulse, setPulse] = useState(false);
+
+
 
   return (
     <TiltCard className={cn("h-full", className)}>
