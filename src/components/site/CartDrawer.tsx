@@ -32,7 +32,7 @@ export function CartDrawer() {
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ type: "spring", stiffness: 260, damping: 30 }}
+            transition={{ type: "spring", stiffness: 210, damping: 34, mass: 0.9 }}
           >
             <header className="flex items-center justify-between border-b border-border px-5 py-4">
               <h2 className="flex items-center gap-2 text-lg">
@@ -67,7 +67,7 @@ export function CartDrawer() {
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, x: 30 }}
-                        className="flex gap-3 rounded-md border border-border bg-[var(--surface-2)] p-3"
+                        className="glint flex gap-3 rounded-[20px] border border-border bg-[var(--surface-2)] p-3"
                       >
                         <img
                           src={product!.image}
@@ -75,7 +75,7 @@ export function CartDrawer() {
                           loading="lazy"
                           width={80}
                           height={80}
-                          className="h-16 w-16 shrink-0 object-contain"
+                          className="product-glow h-16 w-16 shrink-0 object-contain"
                         />
                         <div className="flex-1">
                           <p className="text-sm font-semibold">{product!.name}</p>
@@ -125,13 +125,19 @@ export function CartDrawer() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="font-display text-sm tracking-widest">TOTAL</span>
-                  <span className="font-display text-2xl">{formatPrice(total)}</span>
+                  <span className="font-display text-2xl text-primary">{formatPrice(total)}</span>
                 </div>
-                <Button asChild size="lg" className="w-full rounded-sm tracking-widest">
-                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                    FINALIZAR PEDIDO POR WHATSAPP
-                  </a>
-                </Button>
+                <div className="pill-shimmer">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="glint w-full rounded-full tracking-widest"
+                  >
+                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                      FINALIZAR PEDIDO POR WHATSAPP
+                    </a>
+                  </Button>
+                </div>
                 <div className="flex items-center justify-between text-[11px] text-muted-foreground">
                   <button onClick={clear} className="underline-offset-4 hover:underline">
                     Vaciar carrito
