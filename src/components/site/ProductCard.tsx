@@ -76,17 +76,28 @@ export function ProductCard({ product, className }: { product: Product; classNam
               )}
               <span className="font-display text-lg">{formatPrice(product.price)}</span>
             </div>
-            <Button
-              size="sm"
-              onClick={() => {
-                add(product, 1, product.variants?.options[0]);
-                setOpen(true);
-                toast.success(`${product.name} agregado al carrito`);
-              }}
-              className="rounded-sm text-[11px] font-semibold tracking-widest"
+            <motion.div
+              animate={pulse ? { scale: [1, 0.9, 1.12, 1] } : { scale: 1 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
-              <Plus className="h-3.5 w-3.5" /> AGREGAR
-            </Button>
+              <Button
+                size="sm"
+                onClick={() => {
+                  add(product, 1, product.variants?.options[0]);
+                  setOpen(true);
+                  setPulse(true);
+                  window.setTimeout(() => setPulse(false), 460);
+                  toast.success(`${product.name} agregado al carrito`);
+                }}
+                className={cn(
+                  "glint rounded-full px-4 text-[11px] font-semibold tracking-widest transition-colors duration-200",
+                  pulse && "bg-primary text-primary-foreground shadow-[var(--shadow-accent)]",
+                )}
+              >
+                <Plus className="h-3.5 w-3.5" /> AGREGAR
+              </Button>
+            </motion.div>
+
           </div>
         </div>
       </article>
