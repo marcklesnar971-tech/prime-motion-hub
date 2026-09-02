@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Menu, Search, ShoppingBag, X } from "lucide-react";
 import { motion } from "motion/react";
+import { SearchModal } from "@/components/site/SearchModal";
 import { useCart } from "@/lib/cart";
 import { SHOP_CONFIG } from "@/lib/shop-config";
 import { waLink } from "@/lib/cart";
 import { cn } from "@/lib/utils";
+
 
 const NAV = [
   { to: "/productos" as const, label: "PRODUCTOS" },
