@@ -181,10 +181,15 @@
 }
 
 @utility glass-panel {
-  background: color-mix(in oklab, var(--background) 72%, transparent);
-  backdrop-filter: blur(18px) saturate(140%);
-  border-bottom: 1px solid color-mix(in oklab, white 8%, transparent);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--background) 82%, transparent),
+    color-mix(in oklab, var(--background) 30%, transparent)
+  );
+  backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid color-mix(in oklab, white 5%, transparent);
 }
+
 
 @utility accent-glow {
   background-image: var(--gradient-glow);
