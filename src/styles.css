@@ -202,8 +202,104 @@
 
 @utility surface-card {
   background: var(--gradient-metal);
-  border: 1px solid color-mix(in oklab, white 8%, transparent);
+  border: 1px solid rgb(255 255 255 / 0.05);
+  border-radius: var(--radius-editorial);
 }
+
+/* Destello diagonal de cristal al hacer hover */
+@utility glint {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    top: -60%;
+    bottom: -60%;
+    left: -80%;
+    width: 45%;
+    pointer-events: none;
+    z-index: 30;
+    transform: translateX(0) rotate(18deg);
+    background: linear-gradient(
+      100deg,
+      transparent,
+      rgb(255 255 255 / 0.1) 45%,
+      rgb(255 255 255 / 0.22) 50%,
+      transparent
+    );
+    opacity: 0;
+    transition:
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  &:hover::after {
+    opacity: 1;
+    transform: translateX(320%) rotate(18deg);
+  }
+}
+
+/* Halo Volt ultra sutil bajo el producto */
+@utility product-glow {
+  filter: drop-shadow(0 18px 30px color-mix(in oklab, var(--primary) 5%, transparent))
+    drop-shadow(0 2px 10px oklch(0 0 0 / 0.6));
+}
+
+/* Luz de estudio orgánica detrás de secciones */
+@utility studio-light {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -20% -10%;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        45% 40% at 22% 18%,
+        color-mix(in oklab, var(--primary) 7%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(50% 45% at 82% 72%, rgb(255 255 255 / 0.04), transparent 72%);
+  }
+}
+
+/* Píldora con borde animado Volt/blanco */
+@utility pill-shimmer {
+  border-radius: 9999px;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1.5px;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(
+      110deg,
+      color-mix(in oklab, var(--primary) 90%, transparent),
+      rgb(255 255 255 / 0.9),
+      color-mix(in oklab, var(--primary) 90%, transparent)
+    );
+    background-size: 220% 100%;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: pill-shimmer-move 4s linear infinite;
+    pointer-events: none;
+  }
+}
+
+@keyframes pill-shimmer-move {
+  to {
+    background-position: -220% 0;
+  }
+}
+
 
 @utility magnetic {
   transition:
