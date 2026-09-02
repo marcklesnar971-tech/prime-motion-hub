@@ -129,13 +129,51 @@ function BestSellers({ products }: { products: typeof PRODUCTS }) {
           </h2>
         </Reveal>
 
-        <div className="-mx-4 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:mx-0 md:px-0">
+        {/* Tarjetas horizontales editoriales — tipografía masiva detrás del producto */}
+        <div className="mt-10 hidden gap-4 md:grid">
+          {products.slice(0, 3).map((p, i) => (
+            <Reveal key={`row-${p.slug}`} delay={i * 0.05}>
+              <Link
+                to="/producto/$slug"
+                params={{ slug: p.slug }}
+                className="surface-card glint group relative grid grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] items-center overflow-hidden rounded-[20px] transition-colors hover:border-primary/40"
+              >
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute -left-2 top-1/2 -translate-y-1/2 font-display text-[9rem] leading-none text-outline opacity-30"
+                >
+                  0{i + 1}
+                </span>
+                <div className="relative aspect-[16/10] w-full">
+                  <span aria-hidden className="accent-glow absolute inset-0 opacity-40" />
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    loading="lazy"
+                    className="product-glow relative h-full w-full object-contain p-6 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                  />
+                </div>
+                <div className="relative z-10 pr-8">
+                  <p className="text-[11px] tracking-[0.24em] text-primary">
+                    TOP {i + 1} · {p.category.toUpperCase()}
+                  </p>
+                  <h3 className="mt-2 font-display text-3xl lg:text-4xl">{p.name}</h3>
+                  <p className="mt-2 max-w-md text-sm text-muted-foreground">{p.short}</p>
+                  <p className="mt-4 font-display text-3xl text-primary">{formatPrice(p.price)}</p>
+                </div>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+
+        <div className="-mx-4 mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:mx-0 md:px-0">
           {products.map((p) => (
             <div key={p.slug} className="w-[72vw] shrink-0 snap-start sm:w-72">
               <ProductCard product={p} />
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
