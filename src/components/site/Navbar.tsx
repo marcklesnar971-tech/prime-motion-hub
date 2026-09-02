@@ -61,38 +61,53 @@ export function Navbar() {
           ))}
         </nav>
 
-        <form onSubmit={submit} className="ml-auto hidden md:block" role="search">
-          <label className="flex items-center gap-2 rounded-sm border border-border bg-[var(--surface)]/70 px-3 py-2">
-            <Search className="h-3.5 w-3.5 text-muted-foreground" aria-hidden />
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="¿Qué estás buscando?"
-              aria-label="Buscar productos"
-              className="w-40 bg-transparent text-xs outline-none placeholder:text-muted-foreground lg:w-56"
-            />
-          </label>
-        </form>
+        <button
+          onClick={() => setSearchOpen(true)}
+          className="ml-auto hidden items-center gap-2 rounded-full border border-border bg-[var(--surface)]/70 px-4 py-2 text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground md:flex"
+          aria-label="Abrir buscador"
+        >
+          <Search className="h-3.5 w-3.5" aria-hidden />
+          <span className="text-xs">¿Qué estás buscando?</span>
+        </button>
 
         <div className="ml-auto flex items-center gap-1 md:ml-0">
           <button
+            onClick={() => setSearchOpen(true)}
+            aria-label="Abrir buscador"
+            className="rounded-full p-2.5 transition-colors hover:text-primary md:hidden"
+          >
+            <Search className="h-5 w-5" />
+          </button>
+          <button
             onClick={() => setOpen(true)}
             aria-label={`Abrir carrito (${count} productos)`}
-            className="relative rounded-sm p-2.5 transition-colors hover:text-primary"
+            className="relative rounded-full p-2.5 transition-colors hover:text-primary"
           >
-            <ShoppingBag className="h-5 w-5" />
+            <motion.span
+              key={`bag-${count}`}
+              animate={
+                count > 0
+                  ? { scaleX: [1, 1.25, 0.85, 1.08, 1], scaleY: [1, 0.78, 1.2, 0.96, 1], y: [0, 2, -6, 1, 0] }
+                  : {}
+              }
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              className="block"
+            >
+              <ShoppingBag className="h-5 w-5" />
+            </motion.span>
             {count > 0 && (
               <motion.span
                 key={count}
                 initial={{ scale: 0.4 }}
                 animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 500, damping: 18 }}
+                transition={{ type: "spring", stiffness: 500, damping: 14 }}
                 className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground"
               >
                 {count}
               </motion.span>
             )}
           </button>
+
 
           <a
             href={waLink("Hola, quisiera información sobre sus productos fitness.")}
