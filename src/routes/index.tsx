@@ -114,7 +114,7 @@ function Categories() {
 
 function BestSellers({ products }: { products: typeof PRODUCTS }) {
   return (
-    <section className="relative overflow-hidden bg-[var(--surface)] py-24 md:py-32">
+    <section className="studio-light relative overflow-hidden bg-[var(--surface)] py-24 md:py-32">
       <span
         aria-hidden
         className="pointer-events-none absolute -top-6 left-0 whitespace-nowrap font-display text-[16vw] leading-none text-outline opacity-40"
@@ -181,7 +181,7 @@ function BestSellers({ products }: { products: typeof PRODUCTS }) {
 
 function Promos() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-24 md:px-8 md:py-32">
+    <section className="studio-light mx-auto max-w-7xl px-4 py-24 md:px-8 md:py-32">
       <Reveal>
         <p className="text-[11px] tracking-[0.24em] text-primary">PROMOCIONES</p>
         <LineReveal
@@ -195,7 +195,7 @@ function Promos() {
         {PACKS.map((pack, i) => (
           <Reveal key={pack.slug} delay={i * 0.06}>
             <TiltCard className="h-full">
-              <article className="surface-card flex h-full flex-col overflow-hidden rounded-lg">
+              <article className="surface-card flex h-full flex-col overflow-hidden rounded-[20px]">
                 <div className="relative aspect-[16/10] bg-[var(--surface)]">
                   <span aria-hidden className="accent-glow absolute inset-0 opacity-50" />
                   <img
