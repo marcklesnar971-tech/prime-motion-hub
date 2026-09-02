@@ -19,11 +19,9 @@ const NAV = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menu, setMenu] = useState(false);
-  const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
 
   const { count, setOpen } = useCart();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -32,11 +30,7 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setMenu(false);
-    navigate({ to: "/productos", search: { q: query, cat: "todos" } });
-  };
+
 
   return (
     <header
