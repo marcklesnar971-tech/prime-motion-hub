@@ -138,18 +138,17 @@ export function Navbar() {
           className="glass-panel mt-2 lg:hidden"
         >
           <div className="mx-auto max-w-7xl px-4 py-4">
-            <form onSubmit={submit} role="search" className="mb-4 md:hidden">
-              <label className="flex items-center gap-2 rounded-sm border border-border bg-[var(--surface)] px-3 py-3">
-                <Search className="h-4 w-4 text-muted-foreground" aria-hidden />
-                <input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="¿Qué estás buscando?"
-                  aria-label="Buscar productos"
-                  className="w-full bg-transparent text-sm outline-none"
-                />
-              </label>
-            </form>
+            <button
+              onClick={() => {
+                setMenu(false);
+                setSearchOpen(true);
+              }}
+              className="mb-4 flex w-full items-center gap-2 rounded-full border border-border bg-[var(--surface)] px-4 py-3 text-muted-foreground md:hidden"
+            >
+              <Search className="h-4 w-4" aria-hidden />
+              <span className="text-sm">¿Qué estás buscando?</span>
+            </button>
+
             <nav className="grid gap-1" aria-label="Menú móvil">
               {NAV.map((item) => (
                 <Link
