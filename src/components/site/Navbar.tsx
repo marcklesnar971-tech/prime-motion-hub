@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { Menu, Search, ShoppingBag, X } from "lucide-react";
 import { motion } from "motion/react";
 import { SearchModal } from "@/components/site/SearchModal";
@@ -33,6 +33,7 @@ export function Navbar() {
 
 
   return (
+    <>
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-40 transition-all duration-500",
@@ -109,7 +110,7 @@ export function Navbar() {
             href={waLink("Hola, quisiera información sobre sus productos fitness.")}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden rounded-sm bg-primary px-4 py-2.5 text-[11px] font-semibold tracking-[0.18em] text-primary-foreground transition-opacity hover:opacity-90 lg:block"
+            className="glint hidden rounded-full bg-primary px-5 py-2.5 text-[11px] font-semibold tracking-[0.18em] text-primary-foreground transition-opacity hover:opacity-90 lg:block"
           >
             WHATSAPP
           </a>
@@ -158,7 +159,7 @@ export function Navbar() {
                 href={waLink(`Hola, quisiera información sobre los productos de ${SHOP_CONFIG.brand}.`)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 rounded-sm bg-primary px-4 py-3 text-center text-sm font-semibold tracking-[0.14em] text-primary-foreground"
+                className="mt-2 rounded-full bg-primary px-4 py-3 text-center text-sm font-semibold tracking-[0.14em] text-primary-foreground"
               >
                 ESCRIBIR POR WHATSAPP
               </a>
@@ -167,5 +168,7 @@ export function Navbar() {
         </motion.div>
       )}
     </header>
+      <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
+    </>
   );
 }
