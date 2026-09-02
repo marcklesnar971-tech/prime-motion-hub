@@ -13,22 +13,23 @@ export function ProductCard({ product, className }: { product: Product; classNam
 
   return (
     <TiltCard className={cn("h-full", className)}>
-      <article className="surface-card relative flex h-full flex-col overflow-hidden rounded-lg">
+      <article className="surface-card glint relative flex h-full flex-col overflow-hidden rounded-[20px]">
         <Link
           to="/producto/$slug"
           params={{ slug: product.slug }}
-          className="relative block aspect-square overflow-hidden bg-[var(--surface)]"
+          className="relative block aspect-square overflow-hidden"
           aria-label={`Ver ${product.name}`}
         >
-          <span aria-hidden className="accent-glow absolute inset-0 opacity-40" />
+          <span aria-hidden className="accent-glow absolute inset-0 opacity-30" />
           <img
             src={product.image}
             alt={product.name}
             loading="lazy"
             width={900}
             height={900}
-            className="relative h-full w-full object-contain p-6 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.08] group-hover:-translate-y-1 [transform:translateZ(40px)]"
+            className="product-glow relative h-full w-full object-contain p-6 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.08] group-hover:-translate-y-1 [transform:translateZ(40px)]"
           />
+
           {product.tags.length > 0 && (
             <div className="absolute left-3 top-3 z-10 flex flex-wrap gap-1.5 [transform:translateZ(60px)]">
               {product.tags.map((tag) => (
