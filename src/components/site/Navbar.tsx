@@ -20,6 +20,8 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menu, setMenu] = useState(false);
   const [query, setQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+
   const { count, setOpen } = useCart();
   const navigate = useNavigate();
 
