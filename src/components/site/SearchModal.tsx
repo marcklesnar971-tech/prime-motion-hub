@@ -75,7 +75,7 @@ export function SearchModal({ open, onClose }: Props) {
               {q.trim() ? `${results.length} RESULTADOS` : "SUGERENCIAS"}
             </p>
 
-            <div className="mt-3 grid flex-1 gap-3 overflow-y-auto pb-6 sm:grid-cols-2">
+            <div className="mt-3 grid flex-1 auto-rows-min content-start gap-3 overflow-y-auto pb-6 sm:grid-cols-2">
               {results.map((p, i) => (
                 <motion.div
                   key={p.slug}
