@@ -55,7 +55,10 @@ function AuthPage() {
         toast.success("Cuenta creada");
         navigate({ to: "/admin", replace: true });
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { error } = await supabase.auth.signInWithPassword({
+          email: resolveEmail(email),
+          password,
+        });
         if (error) throw error;
         navigate({ to: "/admin", replace: true });
       }
