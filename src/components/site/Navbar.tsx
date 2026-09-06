@@ -41,8 +41,20 @@ export function Navbar() {
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 md:px-8">
-        <Link to="/" className="font-display text-xl tracking-tight" aria-label="GijuSport inicio">
-          GIJU<span className="text-primary">SPORT</span>
+        <Link to="/" className="group flex items-center gap-2" aria-label="GijuSport inicio">
+          <span
+            className="h-[22px] w-[3px] -skew-x-12 rounded-full bg-[var(--volt)] transition-transform duration-300 group-hover:scale-y-110"
+            aria-hidden
+          />
+          <span className="font-display text-[22px] font-bold italic leading-none tracking-[-0.02em]">
+            <span className="text-foreground">GIJU</span>
+            <span
+              className="text-[var(--volt)]"
+              style={{ textShadow: "0 0 24px color-mix(in oklab, var(--volt) 45%, transparent)" }}
+            >
+              SPORT
+            </span>
+          </span>
         </Link>
 
         <nav className="ml-6 hidden items-center gap-6 lg:flex" aria-label="Principal">
