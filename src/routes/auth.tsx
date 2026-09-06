@@ -32,13 +32,18 @@ function AuthPage() {
     });
   }, [navigate]);
 
+  function resolveEmail(value: string) {
+    const v = value.trim().toLowerCase();
+    return v.includes("@") ? v : `${v}@gijusport.local`;
+  }
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     try {
       if (mode === "signup") {
         const { data, error } = await supabase.auth.signUp({
-          email,
+          email: resolveEmail(email),
           password,
           options: { emailRedirectTo: `${window.location.origin}/admin` },
         });
