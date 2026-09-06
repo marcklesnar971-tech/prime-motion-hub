@@ -52,62 +52,63 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
 }
 
 :root {
   --radius: 0.25rem;
 
-  /* Deep Charcoal #08080A */
-  --background: oklch(0.145 0.004 285);
-  --foreground: oklch(1 0 0);
+  /* Carbón #0B0B0D */
+  --background: oklch(0.155 0.002 285);
+  --foreground: oklch(0.965 0.001 285);
 
-  /* Grafito translúcido #121214 */
-  --surface: oklch(0.185 0.004 286);
-  --surface-2: oklch(0.225 0.005 286);
-  --metal: oklch(0.62 0.004 286);
+  /* Grafito translúcido #17171B */
+  --surface: oklch(0.21 0.004 285);
+  --surface-2: oklch(0.252 0.005 285);
+  --metal: oklch(0.68 0.008 250);
 
-  --card: oklch(0.185 0.004 286);
-  --card-foreground: oklch(1 0 0);
-  --popover: oklch(0.17 0.004 286);
-  --popover-foreground: oklch(1 0 0);
+  --card: oklch(0.21 0.004 285);
+  --card-foreground: oklch(0.965 0.001 285);
+  --popover: oklch(0.19 0.004 285);
+  --popover-foreground: oklch(0.965 0.001 285);
 
-  /* Volt Neon #CCFF00 */
-  --primary: oklch(0.936 0.242 122.6);
-  --primary-foreground: oklch(0.16 0.02 130);
+  /* Platino #B9C0C7 */
+  --primary: oklch(0.805 0.012 245);
+  --primary-foreground: oklch(0.16 0.003 285);
 
-  --secondary: oklch(0.25 0.005 286);
-  --secondary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.27 0.005 285);
+  --secondary-foreground: oklch(0.965 0.001 285);
 
-  --muted: oklch(0.23 0.004 286);
-  /* Gris acero #E4E4E7 atenuado para lectura */
-  --muted-foreground: oklch(0.78 0.003 286);
+  --muted: oklch(0.245 0.004 285);
+  --muted-foreground: oklch(0.735 0.005 285);
 
-  --accent: oklch(0.936 0.242 122.6);
-  --accent-foreground: oklch(0.16 0.02 130);
+  --accent: oklch(0.805 0.012 245);
+  --accent-foreground: oklch(0.16 0.003 285);
 
-  --destructive: oklch(0.62 0.23 25);
+  --destructive: oklch(0.6 0.19 25);
   --destructive-foreground: oklch(0.98 0 0);
 
-  --border: oklch(1 0 0 / 5%);
-  --input: oklch(1 0 0 / 10%);
-  --ring: oklch(0.936 0.242 122.6 / 55%);
+  --border: oklch(1 0 0 / 7%);
+  --input: oklch(1 0 0 / 11%);
+  --ring: oklch(0.805 0.012 245 / 45%);
 
-  --chart-1: oklch(0.936 0.242 122.6);
-  --chart-2: oklch(0.7 0.1 150);
-  --chart-3: oklch(0.6 0.01 286);
-  --chart-4: oklch(0.45 0.01 286);
-  --chart-5: oklch(0.3 0.005 286);
+  --chart-1: oklch(0.805 0.012 245);
+  --chart-2: oklch(0.7 0.01 250);
+  --chart-3: oklch(0.6 0.008 285);
+  --chart-4: oklch(0.45 0.006 285);
+  --chart-5: oklch(0.3 0.004 285);
 
-  --sidebar: oklch(0.17 0.004 286);
-  --sidebar-foreground: oklch(1 0 0);
-  --sidebar-primary: oklch(0.936 0.242 122.6);
-  --sidebar-primary-foreground: oklch(0.16 0.02 130);
-  --sidebar-accent: oklch(0.23 0.004 286);
-  --sidebar-accent-foreground: oklch(1 0 0);
-  --sidebar-border: oklch(1 0 0 / 5%);
-  --sidebar-ring: oklch(0.936 0.242 122.6 / 55%);
+  --sidebar: oklch(0.19 0.004 285);
+  --sidebar-foreground: oklch(0.965 0.001 285);
+  --sidebar-primary: oklch(0.805 0.012 245);
+  --sidebar-primary-foreground: oklch(0.16 0.003 285);
+  --sidebar-accent: oklch(0.245 0.004 285);
+  --sidebar-accent-foreground: oklch(0.965 0.001 285);
+  --sidebar-border: oklch(1 0 0 / 7%);
+  --sidebar-ring: oklch(0.805 0.012 245 / 45%);
+
 
   --gradient-glow: radial-gradient(
     60% 60% at 50% 40%,
@@ -141,8 +142,14 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-weight: 400;
+    letter-spacing: 0.005em;
+    line-height: 1.65;
     overflow-x: hidden;
     position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   /* Ruido digital estático global — textura táctil tipo caucho/acero mate */
@@ -163,11 +170,21 @@
   h3,
   .font-display {
     font-family: var(--font-display);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 0.92;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    line-height: 0.98;
     text-transform: uppercase;
   }
+
+  h1 {
+    font-weight: 700;
+    letter-spacing: -0.028em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
 
   ::selection {
     background: var(--primary);
