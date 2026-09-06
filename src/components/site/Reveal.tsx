@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 export function Reveal({
   children,
   delay = 0,
-  y = 28,
+  y = 18,
   className,
 }: {
   children: ReactNode;
@@ -17,8 +17,9 @@ export function Reveal({
     <motion.div
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: "-70px" }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+
       className={className}
     >
       {children}
@@ -48,8 +49,9 @@ export function LineReveal({
         >
           <motion.span
             className={cn("block", lineClassName)}
-            variants={{ hidden: { y: "110%" }, shown: { y: "0%" } }}
-            transition={{ duration: 0.8, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+            variants={{ hidden: { y: "108%", opacity: 0 }, shown: { y: "0%", opacity: 1 } }}
+            transition={{ duration: 0.9, delay: i * 0.09, ease: [0.16, 1, 0.3, 1] }}
+
           >
             {line}
           </motion.span>
