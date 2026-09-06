@@ -100,7 +100,7 @@ function AuthPage() {
             <input
               type="password"
               required
-              minLength={6}
+              minLength={4}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="mt-2 w-full rounded-sm border border-border bg-[var(--surface-2)] px-4 py-3 text-sm outline-none focus:border-primary"
