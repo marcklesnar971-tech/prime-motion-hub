@@ -32,13 +32,18 @@ function AuthPage() {
     });
   }, [navigate]);
 
+  function resolveEmail(value: string) {
+    const v = value.trim().toLowerCase();
+    return v.includes("@") ? v : `${v}@gijusport.local`;
+  }
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     try {
       if (mode === "signup") {
         const { data, error } = await supabase.auth.signUp({
-          email,
+          email: resolveEmail(email),
           password,
           options: { emailRedirectTo: `${window.location.origin}/admin` },
         });
@@ -50,7 +55,10 @@ function AuthPage() {
         toast.success("Cuenta creada");
         navigate({ to: "/admin", replace: true });
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { error } = await supabase.auth.signInWithPassword({
+          email: resolveEmail(email),
+          password,
+        });
         if (error) throw error;
         navigate({ to: "/admin", replace: true });
       }
@@ -74,9 +82,13 @@ function AuthPage() {
 
         <form onSubmit={onSubmit} className="mt-8 space-y-4">
           <label className="block">
-            <span className="text-[11px] tracking-[0.18em] text-muted-foreground">CORREO</span>
+            <span className="text-[11px] tracking-[0.18em] text-muted-foreground">
+              CORREO O USUARIO
+            </span>
             <input
-              type="email"
+              type="text"
+              autoCapitalize="none"
+              autoComplete="username"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -88,7 +100,7 @@ function AuthPage() {
             <input
               type="password"
               required
-              minLength={6}
+              minLength={4}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="mt-2 w-full rounded-sm border border-border bg-[var(--surface-2)] px-4 py-3 text-sm outline-none focus:border-primary"
