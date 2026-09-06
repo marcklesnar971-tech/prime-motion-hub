@@ -82,9 +82,13 @@ function AuthPage() {
 
         <form onSubmit={onSubmit} className="mt-8 space-y-4">
           <label className="block">
-            <span className="text-[11px] tracking-[0.18em] text-muted-foreground">CORREO</span>
+            <span className="text-[11px] tracking-[0.18em] text-muted-foreground">
+              CORREO O USUARIO
+            </span>
             <input
-              type="email"
+              type="text"
+              autoCapitalize="none"
+              autoComplete="username"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
