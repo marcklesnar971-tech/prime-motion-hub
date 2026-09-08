@@ -32,10 +32,13 @@ export function LineReveal({
   lines,
   className,
   lineClassName,
+  accentLines = [],
 }: {
   lines: string[];
   className?: string;
   lineClassName?: string;
+  /** Índices de línea que reciben el acento Volt de marca. */
+  accentLines?: number[];
 }) {
   return (
     <div className={className}>
@@ -48,7 +51,7 @@ export function LineReveal({
           viewport={{ once: true, margin: "-60px" }}
         >
           <motion.span
-            className={cn("block", lineClassName)}
+            className={cn("block", lineClassName, accentLines.includes(i) && "line-accent")}
             variants={{ hidden: { y: "108%", opacity: 0 }, shown: { y: "0%", opacity: 1 } }}
             transition={{ duration: 0.9, delay: i * 0.09, ease: [0.16, 1, 0.3, 1] }}
 
