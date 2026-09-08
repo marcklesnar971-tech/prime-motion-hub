@@ -94,7 +94,13 @@ export function Hero() {
                 >
                   {i === 2 ? (
                     <>
-                      SE <span className="text-primary">CONSTRUYE.</span>
+                      SE{" "}
+                      <span
+                        className="italic text-[var(--volt)]"
+                        style={{ textShadow: "0 0 32px color-mix(in oklab, var(--volt) 40%, transparent)" }}
+                      >
+                        CONSTRUYE.
+                      </span>
                     </>
                   ) : (
                     line

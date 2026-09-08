@@ -7,8 +7,17 @@ export function Footer() {
     <footer className="border-t border-border bg-[var(--surface)] pb-24 pt-16 md:pb-12">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 md:grid-cols-4 md:px-8">
         <div>
-          <p className="font-display text-2xl">
-            GIJU<span className="text-primary">SPORT</span>
+          <p className="flex items-center gap-2">
+            <span className="h-[24px] w-[3px] -skew-x-12 rounded-full bg-[var(--volt)]" aria-hidden />
+            <span className="font-display text-2xl font-bold italic leading-none tracking-[-0.02em]">
+              <span className="text-foreground">GIJU</span>
+              <span
+                className="text-[var(--volt)]"
+                style={{ textShadow: "0 0 26px color-mix(in oklab, var(--volt) 40%, transparent)" }}
+              >
+                SPORT
+              </span>
+            </span>
           </p>
           <p className="mt-3 max-w-xs text-sm text-muted-foreground">
             Equipamiento, accesorios y suplementos para llevar tu entrenamiento al siguiente nivel.
