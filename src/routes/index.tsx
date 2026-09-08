@@ -436,7 +436,7 @@ function WhatsappCta() {
           <LineReveal
             lines={["ARMA TU PEDIDO.", "CONFÍRMALO POR WHATSAPP."]}
             className="font-display text-3xl md:text-6xl"
-            lineClassName="[&:nth-child(2)]:text-primary"
+            accentLines={[1]}
           />
           <p className="mt-6 max-w-lg text-sm text-muted-foreground">
             Agrega los productos que necesitas, revisa tu carrito y te llegará el mensaje listo para
