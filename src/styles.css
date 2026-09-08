@@ -342,3 +342,10 @@
     transition-duration: 0.08ms !important;
   }
 }
+
+/* Línea de acento de marca: Volt + itálica + glow sutil */
+.line-accent {
+  font-style: italic;
+  color: var(--volt);
+  text-shadow: 0 0 32px color-mix(in oklab, var(--volt) 40%, transparent);
+}
