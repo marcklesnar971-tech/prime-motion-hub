@@ -8,6 +8,7 @@ import { formatPrice } from "@/lib/shop-config";
 
 export function CartDrawer() {
   const { open, setOpen, lines, setQty, remove, total, whatsappUrl, clear } = useCart();
+  const products = useLiveProducts();
 
   const detailed = lines
     .map((line) => ({ line, product: products.find((p) => p.slug === line.slug) }))
