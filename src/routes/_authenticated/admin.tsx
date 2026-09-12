@@ -134,6 +134,82 @@ function AdminPage() {
   );
 }
 
+function WhatsappSetting() {
+  const queryClient = useQueryClient();
+  const [value, setValue] = useState("");
+  const [loaded, setLoaded] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  const settingQuery = useQuery({
+    queryKey: ["site-settings-admin"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("site_settings")
+        .select("whatsapp_number")
+        .eq("id", "default")
+        .maybeSingle();
+      if (error) throw error;
+      return data?.whatsapp_number ?? "";
+    },
+  });
+
+  useEffect(() => {
+    if (!loaded && settingQuery.data !== undefined) {
+      setValue(settingQuery.data ?? "");
+      setLoaded(true);
+    }
+  }, [settingQuery.data, loaded]);
+
+  async function save() {
+    const clean = value.replace(/[^0-9]/g, "");
+    if (clean.length < 8) {
+      toast.error("Escribe el número con código de país, solo dígitos");
+      return;
+    }
+    setSaving(true);
+    try {
+      const { error } = await supabase
+        .from("site_settings")
+        .upsert({ id: "default", whatsapp_number: clean });
+      if (error) throw error;
+      setValue(clean);
+      await queryClient.invalidateQueries({ queryKey: ["site-settings-whatsapp"] });
+      toast.success("Número de WhatsApp actualizado");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "No se pudo guardar");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <section className="surface-card mt-8 rounded-[20px] p-4">
+      <p className="text-[10px] tracking-[0.2em] text-primary">CONTACTO</p>
+      <h2 className="mt-1 text-sm font-semibold">Número de WhatsApp de la web</h2>
+      <p className="mt-1 text-[11px] text-muted-foreground">
+        Formato internacional sin “+” ni espacios. Ejemplo: 51999888777.
+      </p>
+      <div className="mt-3 flex flex-wrap items-center gap-3">
+        <input
+          inputMode="numeric"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder="51999888777"
+          aria-label="Número de WhatsApp"
+          className="w-52 rounded-sm border border-border bg-[var(--surface-2)] px-3 py-2 text-sm text-foreground outline-none focus:border-primary"
+        />
+        <button
+          onClick={save}
+          disabled={saving}
+          className="rounded-full bg-primary px-6 py-3 text-[11px] font-semibold tracking-[0.18em] text-primary-foreground disabled:opacity-60"
+        >
+          {saving ? "GUARDANDO…" : "GUARDAR NÚMERO"}
+        </button>
+      </div>
+    </section>
+  );
+}
+
 function ProductRow({
   slug,
   name,
