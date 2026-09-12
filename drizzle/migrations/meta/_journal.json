@@ -8,6 +8,13 @@
       "when": 1789242700864,
       "tag": "0000_public_read_product_overrides",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789243534373,
+      "tag": "0001_public_read_product_photos",
+      "breakpoints": true
     }
   ]
 }
