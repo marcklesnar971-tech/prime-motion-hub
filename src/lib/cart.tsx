@@ -9,7 +9,8 @@ import {
 } from "react";
 import { type Product } from "@/lib/catalog";
 import { useLiveProducts } from "@/lib/live-catalog";
-import { SHOP_CONFIG, formatPrice } from "@/lib/shop-config";
+import { formatPrice } from "@/lib/shop-config";
+import { getWhatsappNumber, useWhatsappNumber } from "@/lib/site-settings";
 
 export type CartLine = {
   slug: string;
@@ -40,6 +41,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const [open, setOpen] = useState(false);
   const products = useLiveProducts();
+  const whatsappNumber = useWhatsappNumber();
 
   useEffect(() => {
     try {
