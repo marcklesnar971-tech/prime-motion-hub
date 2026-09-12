@@ -109,9 +109,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
     return {
       count,
       total,
-      whatsappUrl: `https://wa.me/${SHOP_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`,
+      whatsappUrl: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`,
     };
-  }, [lines]);
+  }, [lines, products, whatsappNumber]);
 
   const value: CartContextValue = {
     lines,
@@ -136,5 +136,5 @@ export function useCart() {
 }
 
 export function waLink(message: string) {
-  return `https://wa.me/${SHOP_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+  return `https://wa.me/${getWhatsappNumber()}?text=${encodeURIComponent(message)}`;
 }
