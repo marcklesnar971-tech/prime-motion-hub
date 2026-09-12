@@ -97,6 +97,8 @@ function AdminPage() {
         </button>
       </div>
 
+      <WhatsappSetting />
+
       <label className="mt-8 flex items-center gap-3 rounded-sm border border-border bg-[var(--surface)] px-4 py-3">
         <Search className="h-4 w-4 text-muted-foreground" aria-hidden />
         <input
