@@ -7,6 +7,7 @@ import { Reveal, LineReveal } from "@/components/site/Reveal";
 import { TiltCard } from "@/components/site/TiltCard";
 import { ProductCard } from "@/components/site/ProductCard";
 import { CATEGORIES, PACKS, PRODUCTS } from "@/lib/catalog";
+import { useLiveProducts } from "@/lib/live-catalog";
 import { formatPrice } from "@/lib/shop-config";
 import { waLink } from "@/lib/cart";
 import protein from "@/assets/p-protein.png";
@@ -34,8 +35,9 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const bestSellers = PRODUCTS.filter((p) => p.bestSeller);
-  const supplements = PRODUCTS.filter((p) => p.category === "suplementos");
+  const liveProducts = useLiveProducts();
+  const bestSellers = liveProducts.filter((p) => p.bestSeller);
+  const supplements = liveProducts.filter((p) => p.category === "suplementos");
 
   return (
     <>

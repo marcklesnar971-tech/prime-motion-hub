@@ -3,14 +3,15 @@ import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart";
-import { PRODUCTS } from "@/lib/catalog";
+import { useLiveProducts } from "@/lib/live-catalog";
 import { formatPrice } from "@/lib/shop-config";
 
 export function CartDrawer() {
   const { open, setOpen, lines, setQty, remove, total, whatsappUrl, clear } = useCart();
+  const products = useLiveProducts();
 
   const detailed = lines
-    .map((line) => ({ line, product: PRODUCTS.find((p) => p.slug === line.slug) }))
+    .map((line) => ({ line, product: products.find((p) => p.slug === line.slug) }))
     .filter((x) => x.product);
 
   return (

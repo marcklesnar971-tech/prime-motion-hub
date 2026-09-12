@@ -7,7 +7,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { PRODUCTS, type Product } from "@/lib/catalog";
+import { type Product } from "@/lib/catalog";
+import { useLiveProducts } from "@/lib/live-catalog";
 import { SHOP_CONFIG, formatPrice } from "@/lib/shop-config";
 
 export type CartLine = {
@@ -38,6 +39,7 @@ const sameLine = (l: CartLine, slug: string, variant?: string) =>
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const [open, setOpen] = useState(false);
+  const products = useLiveProducts();
 
   useEffect(() => {
     try {
@@ -54,7 +56,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     } catch {
       /* ignore */
     }
-  }, [lines]);
+  }, [lines, products]);
 
   const add = useCallback((product: Product, qty = 1, variant?: string) => {
     setLines((prev) => {
@@ -84,7 +86,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const { count, total, whatsappUrl } = useMemo(() => {
     const detailed = lines
-      .map((l) => ({ line: l, product: PRODUCTS.find((p) => p.slug === l.slug) }))
+      .map((l) => ({ line: l, product: products.find((p) => p.slug === l.slug) }))
       .filter((x): x is { line: CartLine; product: Product } => Boolean(x.product));
 
     const total = detailed.reduce((sum, x) => sum + x.product.price * x.line.qty, 0);
