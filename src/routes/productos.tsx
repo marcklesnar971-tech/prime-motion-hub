@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Search, SlidersHorizontal } from "lucide-react";
-import { CATEGORIES, PRODUCTS } from "@/lib/catalog";
+import { CATEGORIES } from "@/lib/catalog";
+import { useLiveProducts } from "@/lib/live-catalog";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Reveal } from "@/components/site/Reveal";
 import { cn } from "@/lib/utils";
@@ -44,10 +45,11 @@ function ProductosPage() {
   const [sort, setSort] = useState<(typeof SORTS)[number]["id"]>("popular");
   const [onlyStock, setOnlyStock] = useState(false);
   const [maxPrice, setMaxPrice] = useState(1500);
+  const products = useLiveProducts();
 
   const results = useMemo(() => {
     const term = q.trim().toLowerCase();
-    let list = PRODUCTS.filter((p) => {
+    let list = products.filter((p) => {
       const matchCat = cat === "todos" || p.category === cat;
       const matchTerm =
         !term ||
@@ -62,7 +64,7 @@ function ProductosPage() {
     if (sort === "ofertas") list = list.filter((p) => p.oldPrice);
     if (sort === "popular") list = [...list].sort((a, b) => b.reviews - a.reviews);
     return list;
-  }, [q, cat, sort, onlyStock, maxPrice]);
+  }, [q, cat, sort, onlyStock, maxPrice, products]);
 
   return (
     <div className="pt-28 md:pt-32">

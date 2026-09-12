@@ -3,7 +3,8 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import { Check, ChevronLeft, Minus, Plus, ShieldCheck, Star, Truck } from "lucide-react";
 import { toast } from "sonner";
-import { PRODUCTS, getProduct } from "@/lib/catalog";
+import { getProduct } from "@/lib/catalog";
+import { useLiveProduct, useLiveProducts } from "@/lib/live-catalog";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Reveal } from "@/components/site/Reveal";
 import { useCart, waLink } from "@/lib/cart";
@@ -64,13 +65,15 @@ export const Route = createFileRoute("/producto/$slug")({
 });
 
 function ProductoPage() {
-  const { product } = Route.useLoaderData();
+  const { product: baseProduct } = Route.useLoaderData();
+  const product = useLiveProduct(baseProduct);
+  const allProducts = useLiveProducts();
   const { add, setOpen } = useCart();
   const [qty, setQty] = useState(1);
   const [variant, setVariant] = useState(product.variants?.options[0]);
   const [zoom, setZoom] = useState(false);
 
-  const related = PRODUCTS.filter(
+  const related = allProducts.filter(
     (p) => p.category === product.category && p.slug !== product.slug,
   ).slice(0, 4);
 

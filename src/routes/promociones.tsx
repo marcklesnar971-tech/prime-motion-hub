@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { toast } from "sonner";
-import { PACKS, PRODUCTS, getProduct } from "@/lib/catalog";
+import { PACKS, getProduct } from "@/lib/catalog";
+import { useLiveProducts } from "@/lib/live-catalog";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Reveal, LineReveal } from "@/components/site/Reveal";
 import { TiltCard } from "@/components/site/TiltCard";
@@ -28,7 +29,7 @@ export const Route = createFileRoute("/promociones")({
 });
 
 function PromocionesPage() {
-  const offers = PRODUCTS.filter((p) => p.oldPrice);
+  const offers = useLiveProducts().filter((p) => p.oldPrice);
 
   return (
     <div className="pt-28 md:pt-32">
