@@ -16,30 +16,105 @@ export type Database = {
     Tables: {
       product_overrides: {
         Row: {
+          category: string | null
+          colors: string[] | null
           created_at: string
+          description: string | null
+          gallery: string[] | null
+          hidden: boolean
           image_url: string | null
+          is_custom: boolean
+          name: string | null
           old_price: number | null
           price: number | null
+          short: string | null
+          sizes: string[] | null
           slug: string
           stock: boolean | null
+          stock_qty: number | null
           updated_at: string
         }
         Insert: {
+          category?: string | null
+          colors?: string[] | null
           created_at?: string
+          description?: string | null
+          gallery?: string[] | null
+          hidden?: boolean
           image_url?: string | null
+          is_custom?: boolean
+          name?: string | null
           old_price?: number | null
           price?: number | null
+          short?: string | null
+          sizes?: string[] | null
           slug: string
           stock?: boolean | null
+          stock_qty?: number | null
           updated_at?: string
         }
         Update: {
+          category?: string | null
+          colors?: string[] | null
           created_at?: string
+          description?: string | null
+          gallery?: string[] | null
+          hidden?: boolean
           image_url?: string | null
+          is_custom?: boolean
+          name?: string | null
           old_price?: number | null
           price?: number | null
+          short?: string | null
+          sizes?: string[] | null
           slug?: string
           stock?: boolean | null
+          stock_qty?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      promotions: {
+        Row: {
+          active: boolean
+          created_at: string
+          description: string | null
+          discount_percent: number | null
+          ends_at: string | null
+          id: string
+          image_url: string | null
+          product_slugs: string[]
+          starts_at: string | null
+          subtitle: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          discount_percent?: number | null
+          ends_at?: string | null
+          id?: string
+          image_url?: string | null
+          product_slugs?: string[]
+          starts_at?: string | null
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          discount_percent?: number | null
+          ends_at?: string | null
+          id?: string
+          image_url?: string | null
+          product_slugs?: string[]
+          starts_at?: string | null
+          subtitle?: string | null
+          title?: string
           updated_at?: string
         }
         Relationships: []
