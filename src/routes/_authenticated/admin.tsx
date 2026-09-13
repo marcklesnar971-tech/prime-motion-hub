@@ -86,7 +86,7 @@ function AdminPage() {
           <p className="text-[11px] tracking-[0.24em] text-primary">PANEL PRIVADO</p>
           <h1 className="mt-3 font-display text-4xl md:text-6xl">MIS PRODUCTOS</h1>
           <p className="mt-2 text-xs text-muted-foreground">
-            Edita precio, stock y foto. La tienda pública sigue mostrando el catálogo actual.
+            Edita precio, stock y foto. Los cambios se publican en la tienda al guardar.
           </p>
         </div>
         <button
