@@ -67,7 +67,16 @@ export type Product = {
   stock: boolean;
   bestSeller?: boolean;
   featured?: boolean;
+  /** Unidades disponibles (editable desde el panel). */
+  stockQty?: number | undefined;
+  colors?: string[] | undefined;
+  sizes?: string[] | undefined;
+  /** Fotos adicionales para la galería del producto. */
+  gallery?: string[] | undefined;
+  /** Nombre de la promoción activa aplicada al precio. */
+  promoLabel?: string | undefined;
 };
+
 
 export type Category = {
   slug: string;
