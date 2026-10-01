@@ -215,8 +215,17 @@ function ProductoPage() {
               )}
             </div>
             <p className="mt-2 text-xs text-primary">
-              {product.stock ? "Disponible · stock confirmado por WhatsApp" : "Bajo pedido"}
+              {product.stock
+                ? product.stockQty != null
+                  ? `Disponible · ${product.stockQty} unidades en stock`
+                  : "Disponible · stock confirmado por WhatsApp"
+                : "Bajo pedido"}
             </p>
+            {product.promoLabel && (
+              <p className="mt-1 text-xs text-muted-foreground">
+                Promoción activa: <span className="text-primary">{product.promoLabel}</span>
+              </p>
+            )}
 
             <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
               {product.description}
@@ -234,7 +243,7 @@ function ProductoPage() {
                       onClick={() => setVariant(opt)}
                       className={cn(
                         "min-w-14 rounded-sm border px-4 py-3 text-xs font-semibold transition-colors",
-                        variant === opt
+                        selectedVariant === opt
                           ? "border-primary bg-primary text-primary-foreground"
                           : "border-border hover:border-primary",
                       )}
@@ -245,6 +254,51 @@ function ProductoPage() {
                 </div>
               </div>
             )}
+
+            {product.colors && product.colors.length > 0 && (
+              <div className="mt-8">
+                <p className="text-[11px] tracking-[0.2em] text-muted-foreground">COLOR</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {product.colors.map((opt) => (
+                    <button
+                      key={opt}
+                      onClick={() => setColor(opt)}
+                      className={cn(
+                        "min-w-14 rounded-sm border px-4 py-3 text-xs font-semibold transition-colors",
+                        selectedColor === opt
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border hover:border-primary",
+                      )}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {product.sizes && product.sizes.length > 0 && (
+              <div className="mt-8">
+                <p className="text-[11px] tracking-[0.2em] text-muted-foreground">TALLA</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {product.sizes.map((opt) => (
+                    <button
+                      key={opt}
+                      onClick={() => setSize(opt)}
+                      className={cn(
+                        "min-w-14 rounded-sm border px-4 py-3 text-xs font-semibold transition-colors",
+                        selectedSize === opt
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border hover:border-primary",
+                      )}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <div className="flex items-center rounded-sm border border-border">
