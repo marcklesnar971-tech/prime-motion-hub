@@ -65,19 +65,51 @@ export const Route = createFileRoute("/producto/$slug")({
 });
 
 function ProductoPage() {
-  const { product: baseProduct } = Route.useLoaderData();
-  const product = useLiveProduct(baseProduct);
+  const { product: baseProduct, slug } = Route.useLoaderData();
   const allProducts = useLiveProducts();
   const { add, setOpen } = useCart();
   const [qty, setQty] = useState(1);
-  const [variant, setVariant] = useState(product.variants?.options[0]);
+  const [variant, setVariant] = useState<string | undefined>(undefined);
+  const [color, setColor] = useState<string | undefined>(undefined);
+  const [size, setSize] = useState<string | undefined>(undefined);
   const [zoom, setZoom] = useState(false);
+  const [activeImage, setActiveImage] = useState<string | null>(null);
+
+  const product = allProducts.find((p) => p.slug === slug) ?? baseProduct;
+
+  if (!product) {
+    return (
+      <div className="mx-auto max-w-3xl px-4 pt-32 pb-24 text-center">
+        <h1 className="font-display text-4xl">PRODUCTO NO DISPONIBLE</h1>
+        <p className="mt-3 text-sm text-muted-foreground">
+          Es posible que este producto ya no esté publicado.
+        </p>
+        <Link
+          to="/productos"
+          search={{ q: "", cat: "todos" }}
+          className="mt-8 inline-block rounded-sm bg-primary px-6 py-4 text-xs font-semibold tracking-[0.18em] text-primary-foreground"
+        >
+          VER CATÁLOGO
+        </Link>
+      </div>
+    );
+  }
+
+  const selectedVariant = variant ?? product.variants?.options[0];
+  const selectedColor = color ?? product.colors?.[0];
+  const selectedSize = size ?? product.sizes?.[0];
+  const variantLabel =
+    [selectedVariant, selectedColor, selectedSize].filter(Boolean).join(" / ") || undefined;
+
+  const images = [product.image, ...(product.gallery ?? [])].filter(Boolean);
+  const mainImage = activeImage ?? images[0] ?? product.image;
 
   const related = allProducts.filter(
     (p) => p.category === product.category && p.slug !== product.slug,
   ).slice(0, 4);
 
-  const waMessage = `Hola, quiero realizar una consulta sobre los siguientes productos:\n\n• ${product.name}${variant ? ` (${variant})` : ""} — x${qty}\n\nTotal estimado: ${formatPrice(product.price * qty)}\n\nQuisiera confirmar disponibilidad, precio final, promociones y formas de pago.`;
+  const waMessage = `Hola, quiero realizar una consulta sobre los siguientes productos:\n\n• ${product.name}${variantLabel ? ` (${variantLabel})` : ""} — x${qty}\n\nTotal estimado: ${formatPrice(product.price * qty)}\n\nQuisiera confirmar disponibilidad, precio final, promociones y formas de pago.`;
+
 
   return (
     <div className="pt-24 md:pt-28">
