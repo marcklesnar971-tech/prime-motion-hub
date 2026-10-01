@@ -1,10 +1,10 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { motion } from "motion/react";
 import { Check, ChevronLeft, Minus, Plus, ShieldCheck, Star, Truck } from "lucide-react";
 import { toast } from "sonner";
 import { getProduct } from "@/lib/catalog";
-import { useLiveProduct, useLiveProducts } from "@/lib/live-catalog";
+import { useLiveProducts } from "@/lib/live-catalog";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Reveal } from "@/components/site/Reveal";
 import { useCart, waLink } from "@/lib/cart";
@@ -14,16 +14,16 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/producto/$slug")({
   loader: ({ params }) => {
     const product = getProduct(params.slug);
-    if (!product) throw notFound();
-    return { product };
+    return { product: product ?? null, slug: params.slug };
   },
   head: ({ loaderData }) => {
-    if (!loaderData) {
+    if (!loaderData?.product) {
       return {
-        meta: [{ title: "Producto no disponible | GijuSport" }, { name: "robots", content: "noindex" }],
+        meta: [{ title: "Producto | GijuSport" }, { name: "robots", content: "noindex" }],
       };
     }
     const { product } = loaderData;
+
     const title = `${product.name} | GijuSport`;
     return {
       meta: [
@@ -65,19 +65,51 @@ export const Route = createFileRoute("/producto/$slug")({
 });
 
 function ProductoPage() {
-  const { product: baseProduct } = Route.useLoaderData();
-  const product = useLiveProduct(baseProduct);
+  const { product: baseProduct, slug } = Route.useLoaderData();
   const allProducts = useLiveProducts();
   const { add, setOpen } = useCart();
   const [qty, setQty] = useState(1);
-  const [variant, setVariant] = useState(product.variants?.options[0]);
+  const [variant, setVariant] = useState<string | undefined>(undefined);
+  const [color, setColor] = useState<string | undefined>(undefined);
+  const [size, setSize] = useState<string | undefined>(undefined);
   const [zoom, setZoom] = useState(false);
+  const [activeImage, setActiveImage] = useState<string | null>(null);
+
+  const product = allProducts.find((p) => p.slug === slug) ?? baseProduct;
+
+  if (!product) {
+    return (
+      <div className="mx-auto max-w-3xl px-4 pt-32 pb-24 text-center">
+        <h1 className="font-display text-4xl">PRODUCTO NO DISPONIBLE</h1>
+        <p className="mt-3 text-sm text-muted-foreground">
+          Es posible que este producto ya no esté publicado.
+        </p>
+        <Link
+          to="/productos"
+          search={{ q: "", cat: "todos" }}
+          className="mt-8 inline-block rounded-sm bg-primary px-6 py-4 text-xs font-semibold tracking-[0.18em] text-primary-foreground"
+        >
+          VER CATÁLOGO
+        </Link>
+      </div>
+    );
+  }
+
+  const selectedVariant = variant ?? product.variants?.options[0];
+  const selectedColor = color ?? product.colors?.[0];
+  const selectedSize = size ?? product.sizes?.[0];
+  const variantLabel =
+    [selectedVariant, selectedColor, selectedSize].filter(Boolean).join(" / ") || undefined;
+
+  const images = [product.image, ...(product.gallery ?? [])].filter(Boolean);
+  const mainImage = activeImage ?? images[0] ?? product.image;
 
   const related = allProducts.filter(
     (p) => p.category === product.category && p.slug !== product.slug,
   ).slice(0, 4);
 
-  const waMessage = `Hola, quiero realizar una consulta sobre los siguientes productos:\n\n• ${product.name}${variant ? ` (${variant})` : ""} — x${qty}\n\nTotal estimado: ${formatPrice(product.price * qty)}\n\nQuisiera confirmar disponibilidad, precio final, promociones y formas de pago.`;
+  const waMessage = `Hola, quiero realizar una consulta sobre los siguientes productos:\n\n• ${product.name}${variantLabel ? ` (${variantLabel})` : ""} — x${qty}\n\nTotal estimado: ${formatPrice(product.price * qty)}\n\nQuisiera confirmar disponibilidad, precio final, promociones y formas de pago.`;
+
 
   return (
     <div className="pt-24 md:pt-28">
@@ -107,7 +139,7 @@ function ProductoPage() {
                 className="relative block aspect-square w-full cursor-zoom-in overflow-hidden"
               >
                 <motion.img
-                  src={product.image}
+                  src={mainImage}
                   alt={product.name}
                   width={900}
                   height={900}
@@ -122,27 +154,36 @@ function ProductoPage() {
               </button>
             </motion.div>
             <div className="mt-3 grid grid-cols-4 gap-3">
-              {[0, 1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="surface-card aspect-square overflow-hidden rounded-md opacity-70"
-                >
-                  <img
-                    src={product.image}
-                    alt={`${product.name} vista ${i + 1}`}
-                    loading="lazy"
-                    width={200}
-                    height={200}
+              {(images.length > 1 ? images : [0, 1, 2, 3].map(() => product.image)).map(
+                (src, i) => (
+                  <button
+                    key={`${src}-${i}`}
+                    type="button"
+                    onClick={() => setActiveImage(src)}
+                    aria-label={`Ver foto ${i + 1} de ${product.name}`}
                     className={cn(
-                      "h-full w-full object-contain p-3",
-                      i === 1 && "rotate-6",
-                      i === 2 && "-rotate-6 scale-110",
-                      i === 3 && "scale-95",
+                      "surface-card aspect-square overflow-hidden rounded-md transition-opacity",
+                      mainImage === src ? "opacity-100 border-primary" : "opacity-70 hover:opacity-100",
                     )}
-                  />
-                </div>
-              ))}
+                  >
+                    <img
+                      src={src}
+                      alt={`${product.name} vista ${i + 1}`}
+                      loading="lazy"
+                      width={200}
+                      height={200}
+                      className={cn(
+                        "h-full w-full object-contain p-3",
+                        images.length <= 1 && i === 1 && "rotate-6",
+                        images.length <= 1 && i === 2 && "-rotate-6 scale-110",
+                        images.length <= 1 && i === 3 && "scale-95",
+                      )}
+                    />
+                  </button>
+                ),
+              )}
             </div>
+
           </div>
 
           {/* Info */}
@@ -174,8 +215,17 @@ function ProductoPage() {
               )}
             </div>
             <p className="mt-2 text-xs text-primary">
-              {product.stock ? "Disponible · stock confirmado por WhatsApp" : "Bajo pedido"}
+              {product.stock
+                ? product.stockQty != null
+                  ? `Disponible · ${product.stockQty} unidades en stock`
+                  : "Disponible · stock confirmado por WhatsApp"
+                : "Bajo pedido"}
             </p>
+            {product.promoLabel && (
+              <p className="mt-1 text-xs text-muted-foreground">
+                Promoción activa: <span className="text-primary">{product.promoLabel}</span>
+              </p>
+            )}
 
             <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
               {product.description}
@@ -193,7 +243,7 @@ function ProductoPage() {
                       onClick={() => setVariant(opt)}
                       className={cn(
                         "min-w-14 rounded-sm border px-4 py-3 text-xs font-semibold transition-colors",
-                        variant === opt
+                        selectedVariant === opt
                           ? "border-primary bg-primary text-primary-foreground"
                           : "border-border hover:border-primary",
                       )}
@@ -204,6 +254,51 @@ function ProductoPage() {
                 </div>
               </div>
             )}
+
+            {product.colors && product.colors.length > 0 && (
+              <div className="mt-8">
+                <p className="text-[11px] tracking-[0.2em] text-muted-foreground">COLOR</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {product.colors.map((opt) => (
+                    <button
+                      key={opt}
+                      onClick={() => setColor(opt)}
+                      className={cn(
+                        "min-w-14 rounded-sm border px-4 py-3 text-xs font-semibold transition-colors",
+                        selectedColor === opt
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border hover:border-primary",
+                      )}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {product.sizes && product.sizes.length > 0 && (
+              <div className="mt-8">
+                <p className="text-[11px] tracking-[0.2em] text-muted-foreground">TALLA</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {product.sizes.map((opt) => (
+                    <button
+                      key={opt}
+                      onClick={() => setSize(opt)}
+                      className={cn(
+                        "min-w-14 rounded-sm border px-4 py-3 text-xs font-semibold transition-colors",
+                        selectedSize === opt
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border hover:border-primary",
+                      )}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <div className="flex items-center rounded-sm border border-border">
@@ -226,7 +321,7 @@ function ProductoPage() {
 
               <button
                 onClick={() => {
-                  add(product, qty, variant);
+                  add(product, qty, variantLabel);
                   setOpen(true);
                   toast.success(`${product.name} agregado al carrito`);
                 }}
