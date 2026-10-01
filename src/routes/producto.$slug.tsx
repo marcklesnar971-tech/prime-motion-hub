@@ -1,10 +1,10 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { motion } from "motion/react";
 import { Check, ChevronLeft, Minus, Plus, ShieldCheck, Star, Truck } from "lucide-react";
 import { toast } from "sonner";
 import { getProduct } from "@/lib/catalog";
-import { useLiveProduct, useLiveProducts } from "@/lib/live-catalog";
+import { useLiveProducts } from "@/lib/live-catalog";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Reveal } from "@/components/site/Reveal";
 import { useCart, waLink } from "@/lib/cart";
@@ -321,7 +321,7 @@ function ProductoPage() {
 
               <button
                 onClick={() => {
-                  add(product, qty, variant);
+                  add(product, qty, variantLabel);
                   setOpen(true);
                   toast.success(`${product.name} agregado al carrito`);
                 }}
