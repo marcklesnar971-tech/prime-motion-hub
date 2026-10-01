@@ -139,7 +139,7 @@ function ProductoPage() {
                 className="relative block aspect-square w-full cursor-zoom-in overflow-hidden"
               >
                 <motion.img
-                  src={product.image}
+                  src={mainImage}
                   alt={product.name}
                   width={900}
                   height={900}
@@ -154,27 +154,36 @@ function ProductoPage() {
               </button>
             </motion.div>
             <div className="mt-3 grid grid-cols-4 gap-3">
-              {[0, 1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="surface-card aspect-square overflow-hidden rounded-md opacity-70"
-                >
-                  <img
-                    src={product.image}
-                    alt={`${product.name} vista ${i + 1}`}
-                    loading="lazy"
-                    width={200}
-                    height={200}
+              {(images.length > 1 ? images : [0, 1, 2, 3].map(() => product.image)).map(
+                (src, i) => (
+                  <button
+                    key={`${src}-${i}`}
+                    type="button"
+                    onClick={() => setActiveImage(src)}
+                    aria-label={`Ver foto ${i + 1} de ${product.name}`}
                     className={cn(
-                      "h-full w-full object-contain p-3",
-                      i === 1 && "rotate-6",
-                      i === 2 && "-rotate-6 scale-110",
-                      i === 3 && "scale-95",
+                      "surface-card aspect-square overflow-hidden rounded-md transition-opacity",
+                      mainImage === src ? "opacity-100 border-primary" : "opacity-70 hover:opacity-100",
                     )}
-                  />
-                </div>
-              ))}
+                  >
+                    <img
+                      src={src}
+                      alt={`${product.name} vista ${i + 1}`}
+                      loading="lazy"
+                      width={200}
+                      height={200}
+                      className={cn(
+                        "h-full w-full object-contain p-3",
+                        images.length <= 1 && i === 1 && "rotate-6",
+                        images.length <= 1 && i === 2 && "-rotate-6 scale-110",
+                        images.length <= 1 && i === 3 && "scale-95",
+                      )}
+                    />
+                  </button>
+                ),
+              )}
             </div>
+
           </div>
 
           {/* Info */}
