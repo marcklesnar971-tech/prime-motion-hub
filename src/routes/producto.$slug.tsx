@@ -14,16 +14,16 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/producto/$slug")({
   loader: ({ params }) => {
     const product = getProduct(params.slug);
-    if (!product) throw notFound();
-    return { product };
+    return { product: product ?? null, slug: params.slug };
   },
   head: ({ loaderData }) => {
-    if (!loaderData) {
+    if (!loaderData?.product) {
       return {
-        meta: [{ title: "Producto no disponible | GijuSport" }, { name: "robots", content: "noindex" }],
+        meta: [{ title: "Producto | GijuSport" }, { name: "robots", content: "noindex" }],
       };
     }
     const { product } = loaderData;
+
     const title = `${product.name} | GijuSport`;
     return {
       meta: [
