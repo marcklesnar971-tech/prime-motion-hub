@@ -3,6 +3,7 @@ import { Check } from "lucide-react";
 import { toast } from "sonner";
 import { PACKS, getProduct } from "@/lib/catalog";
 import { useLiveProducts } from "@/lib/live-catalog";
+import { useLivePromotions } from "@/lib/promotions";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Reveal, LineReveal } from "@/components/site/Reveal";
 import { TiltCard } from "@/components/site/TiltCard";
@@ -29,7 +30,9 @@ export const Route = createFileRoute("/promociones")({
 });
 
 function PromocionesPage() {
-  const offers = useLiveProducts().filter((p) => p.oldPrice);
+  const products = useLiveProducts();
+  const offers = products.filter((p) => p.oldPrice);
+  const promos = useLivePromotions();
 
   return (
     <div className="pt-28 md:pt-32">
@@ -40,6 +43,36 @@ function PromocionesPage() {
           className="mt-3 font-display text-5xl md:text-8xl"
           lineClassName="[&:nth-child(2)]:text-primary"
         />
+
+        {promos.length > 0 && (
+          <div className="mt-12 grid gap-4 md:grid-cols-2">
+            {promos.map((promo) => {
+              const items = products.filter((p) => promo.productSlugs.includes(p.slug));
+              return (
+                <article key={promo.id} className="surface-card rounded-[20px] border border-primary/30 p-6">
+                  <span className="rounded-sm bg-primary px-2 py-0.5 text-[10px] font-bold tracking-widest text-primary-foreground">
+                    {promo.discountPercent ? `-${promo.discountPercent}%` : "PROMO"}
+                  </span>
+                  <h2 className="mt-4 font-display text-2xl">{promo.title}</h2>
+                  {promo.subtitle && <p className="mt-1 text-sm text-primary">{promo.subtitle}</p>}
+                  {promo.description && (
+                    <p className="mt-3 text-sm text-muted-foreground">{promo.description}</p>
+                  )}
+                  {promo.endsAt && (
+                    <p className="mt-3 text-[11px] tracking-widest text-muted-foreground">
+                      VÁLIDO HASTA {new Date(promo.endsAt).toLocaleDateString("es-PE", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" }).toUpperCase()}
+                    </p>
+                  )}
+                  {items.length > 0 && (
+                    <p className="mt-3 text-xs text-muted-foreground">
+                      Incluye: {items.map((i) => i.name).join(", ")}
+                    </p>
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        )}
 
         <div className="mt-12 grid gap-4 lg:grid-cols-3">
           {PACKS.map((pack, i) => (
